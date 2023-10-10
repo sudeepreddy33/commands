@@ -1,0 +1,15 @@
+//Kafka start up process
+//start the zookeeper
+bin/zookeeper-server-start.sh config/zookeeper.properties
+
+//start the kafka server
+bin/kafka-server-start.sh config/server.properties
+
+//create a topic
+bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --topic tname --partitions 3 --replication-factor 1
+
+//start the producer/pub
+bin/kafka-console-producer.sh --broker-list localhost:9092 --topic tname
+
+//start the consumer/sub
+bin/kafka-console-consumer.sh bootstrap-server localhost:9092 --topic tname --from-beginning
