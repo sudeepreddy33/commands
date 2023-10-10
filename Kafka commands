@@ -1,8 +1,8 @@
-//Kafka start up process
+//Kafka start-up process using zookeeeper
 //start the zookeeper
 bin/zookeeper-server-start.sh config/zookeeper.properties
 
-//start the kafka server
+//start the Kafka server
 bin/kafka-server-start.sh config/server.properties
 
 //create a topic
@@ -13,3 +13,13 @@ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic tname
 
 //start the consumer/sub
 bin/kafka-console-consumer.sh bootstrap-server localhost:9092 --topic tname --from-beginning
+
+
+
+//Kafka start-up process without using zookeeper (kraft)
+//create a cluster ID
+KAFKA_CLUSTER_ID="$(bin/kafka-storage.sh random-uuid)"
+
+//start the kafka server
+bin/kafka-storage.sh format -t $KAFKA_CLUSTER_ID -c config/kraft/server.properties
+bin/kafka-server-start.sh config/kraft/server.properties 
